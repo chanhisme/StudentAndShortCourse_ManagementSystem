@@ -21,16 +21,18 @@ public class Program {
     /**
      * @param args the command line arguments
      */
+   
     public static void main(String[] args) {
+        final String STUDENT_FILE_PATH = "Students.txt";
         int choice;
         Map <String, Student> students = new LinkedHashMap<>();
-        StudentDAO studentDao = new StudentDAO(students);
-                
+        StudentDAO studentDao = new StudentDAO(students, STUDENT_FILE_PATH);
+        studentDao.load();
         StudentManagement studentManagement = new StudentManagement(studentDao);
         try {
 
             do {
-                System.out.println("***************Main Menu***************");
+                System.out.println("\n\n***************Main Menu***************");
                 Menu.printMenu("1.Student Management|2.Course Management|3.Exit|Select:");
                 choice = DataInput.getIntegerNumber();
                 switch (choice) {
