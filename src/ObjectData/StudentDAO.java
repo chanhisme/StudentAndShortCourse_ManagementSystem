@@ -14,9 +14,9 @@ import java.util.Map;
  */
 public class StudentDAO extends BasedDAO<Student> {
     private Map<String, Student> students;
-
-    public StudentDAO(Map<String, Student> students) {
-        super(students);
+    private String FILE_PATH;
+    public StudentDAO(Map<String, Student> students, String FILE_PATH) {
+        super(students, FILE_PATH);
     }
 
     @Override
@@ -36,8 +36,7 @@ public class StudentDAO extends BasedDAO<Student> {
 
     @Override
     public void save() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
 
     @Override

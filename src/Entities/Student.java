@@ -4,28 +4,39 @@
  */
 package Entities;
 
+import Utilities.DataInput;
+import Utilities.DataValidation;
+
 /**
  *
  * @author chanh
  */
 public class Student {
+    
     private String id;
     private String name;
     private String major;
     private double gpa;
+    
+    
+    private final String REGEX_NAME = "^\\s*\\S+(?:\\s+\\S+)+\\s*$";
+    private final String REGEX_ID = "^STU\\d{4}$";
+    public Student(String id, String name, String major, double gpa) throws Exception {
+        setId(id);
+        setName(name);
+        setMajor(major);
+        setGpa(gpa);
 
-    public Student(String id, String name, String major, double gpa) {
-        this.id = id;
-        this.name = name;
-        this.major = major;
-        this.gpa = gpa;
     }
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(String id) throws Exception {
+        if(!DataValidation.checkStringWithFormat(id, REGEX_ID)){
+            throw new Exception("Student ID must follow the format STU0000.");
+        }
         this.id = id;
     }
 
@@ -33,7 +44,10 @@ public class Student {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) throws Exception {
+        if(!DataValidation.checkStringWithFormat(name, REGEX_NAME)){
+            throw new Exception("Name is invalid");
+        }
         this.name = name;
     }
 
@@ -41,7 +55,10 @@ public class Student {
         return major;
     }
 
-    public void setMajor(String major) {
+    public void setMajor(String major) throws Exception {
+        if(major == null || major.isEmpty()){
+            throw new Exception("major must be not null");
+        }
         this.major = major;
     }
 
@@ -49,8 +66,11 @@ public class Student {
         return gpa;
     }
 
-    public void setGpa(double gpa) {
+    public void setGpa(double gpa) throws Exception {
+        if(gpa < 0.0 || gpa > 4.0){
+            throw new Exception("gpa is invalid");
+        }
         this.gpa = gpa;
     }
-    
+
 }

@@ -14,9 +14,10 @@ import java.util.Map;
 public abstract class BasedDAO <V> {
 
     protected Map <String, V> management;
-
-    protected BasedDAO(Map<String, V> management) {
+    protected String FILE_PATH;
+    protected BasedDAO(Map<String, V> management, String FILE_PATH) {
         this.management = management;
+        this.FILE_PATH = FILE_PATH;
     }
 
   
