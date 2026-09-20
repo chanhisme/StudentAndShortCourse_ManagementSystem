@@ -1,7 +1,12 @@
 package BusinessObject;
 
+import Entities.Student;
+import ObjectData.BasedDAO;
 import Utilities.DataInput;
 import Utilities.Menu;
+import ObjectData.StudentDAO;
+import java.util.Map;
+import java.util.LinkedHashMap;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -18,6 +23,10 @@ public class Program {
      */
     public static void main(String[] args) {
         int choice;
+        Map <String, Student> students = new LinkedHashMap<>();
+        StudentDAO studentDao = new StudentDAO(students);
+                
+        StudentManagement studentManagement = new StudentManagement(studentDao);
         try {
 
             do {
@@ -26,6 +35,7 @@ public class Program {
                 choice = DataInput.getIntegerNumber();
                 switch (choice) {
                     case 1:
+                       studentManagement.processMenuForStudent();
                         break;
                     case 2:
                         break;

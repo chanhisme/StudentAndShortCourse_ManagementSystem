@@ -17,4 +17,13 @@ public class DataValidation {
         }
         return result;
     }
+    
+    public static boolean checkStringEmpty(String value) {
+        boolean result = true;
+         if(value.isEmpty()){
+             result = false;                     
+         }
+         return result;        
+    }
 }
+
