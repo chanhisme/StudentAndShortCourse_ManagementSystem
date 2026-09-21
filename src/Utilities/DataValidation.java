@@ -17,13 +17,22 @@ public final class DataValidation {
         }
         return result;
     }
-    
+
     public static boolean checkStringEmpty(String value) {
         boolean result = true;
-         if(value.isEmpty()){
-             result = false;                     
-         }
-         return result;        
+        if (value.isEmpty()) {
+            result = false;
+        }
+        return result;
+    }
+
+    public static <V> boolean checkObjectNull(V object) {
+        boolean result = true;
+
+        if (object == null) {
+            result = false;
+        }
+
+        return result;
     }
 }
-
