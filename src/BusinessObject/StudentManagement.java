@@ -32,7 +32,8 @@ public class StudentManagement {
                 System.out.println("\n\n***************Student Menu***************");
                 Menu.printMenu("1.List all students|2.Add a new student|"
                         + "3.Search for a student by ID|"
-                        + "4.Update a Student's GPA by ID|0.Exit|Select:");
+                        + "4.Update a Student's GPA by ID|"
+                        + "5.List all Students by Major|0.Exit|Select:");
                 choice = DataInput.getIntegerNumber();
 
                 switch (choice) {
@@ -48,7 +49,11 @@ public class StudentManagement {
                     case 4:
                         updateStudentById();
                         break;
+                    case 5:
+                        listAllStudentsByMajor();
+                        break;
                     case 0:
+                        listAllStudentsByMajor();
                         return;
 
                 }
@@ -105,7 +110,7 @@ public class StudentManagement {
             System.out.println("Student ID does not exist!");
             return;
         }
-        
+
         printStudent(student);
 
     }
@@ -141,21 +146,22 @@ public class StudentManagement {
         }
 
         Student student = findById(id);
-        if(!DataValidation.checkObjectNull(student)){
+        if (!DataValidation.checkObjectNull(student)) {
             System.out.println("Student must be not null");
             return;
         }
-        if(setnewStudent(student)){
+        if (setnewStudent(student)) {
             studentDAO.save();
             System.out.println("Update successfully");
-        } 
+        }
     }
-    public boolean setnewStudent(Student student){
+
+    public boolean setnewStudent(Student student) {
         boolean isSuccess = false;
         String oldName = student.getName();
         String oldMajor = student.getMajor();
         double oldGpa = student.getGpa();
-        try{
+        try {
             String newName = DataInput.getString("Enter new name: ");
             String newMajor = DataInput.getString("Enter new major: ");
             double newGpa = DataInput.getDoubleNumber("Enter new gpa: ");
@@ -163,21 +169,32 @@ public class StudentManagement {
             student.setMajor(newMajor);
             student.setGpa(newGpa);
             isSuccess = true;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Update failed: " + e.getMessage());
-            try{
+            try {
                 student.setName(oldName);
                 student.setMajor(oldMajor);
                 student.setGpa(oldGpa);
-            }
-            catch(Exception rollBackEx){
+            } catch (Exception rollBackEx) {
                 System.out.println("Roll back failed: " + rollBackEx.getMessage());
             }
         }
         return isSuccess;
     }
-    
+
+    public void listAllStudentsByMajor() {
+        String major = DataInput.getString("Enter major: ");
+        List<Student> students = studentDAO.findStudentByMajor(major);
+        if (!DataValidation.checkObjectNull(students) || students.isEmpty()) {
+            System.out.println("The student list must be not empty");
+            return;
+        }
+        listAllStudent(students);
+    }
+
+    public List<Student> findStudentByMajor(String major) {
+        return studentDAO.findStudentByMajor(major);
+    }
 
     public Student findById(String id) {
         return studentDAO.findById(id);

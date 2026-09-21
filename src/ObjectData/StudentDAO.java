@@ -10,6 +10,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -75,4 +76,16 @@ public class StudentDAO extends BasedDAO<Student> {
             System.out.println(e.getMessage());
         }
     }
+    
+    public List <Student> findStudentByMajor(String major){
+        List <Student> result = new ArrayList<>();
+        for(Student student : getAll()){
+            if(student.getMajor().equalsIgnoreCase(major)){
+                result.add(student);
+            }
+        }
+        return result;
+    }
+    
+    
 }
