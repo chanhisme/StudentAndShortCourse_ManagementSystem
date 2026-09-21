@@ -8,7 +8,7 @@ package Utilities;
  *
  * @author chanh
  */
-public class DataValidation {
+public final class DataValidation {
 
     public static boolean checkStringWithFormat(String value, String pattern) {
         boolean result = false;

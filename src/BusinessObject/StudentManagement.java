@@ -9,7 +9,7 @@ import ObjectData.StudentDAO;
 import Utilities.DataInput;
 import Utilities.Menu;
 import java.util.List;
-
+import Utilities.DataValidation;
 /**
  *
  * @author chanh
@@ -29,14 +29,19 @@ public class StudentManagement {
 
             do {
                 System.out.println("\n\n***************Student Menu***************");
-                Menu.printMenu("1.List all students|2.Add a new student|0.Exit|Select:");
+                Menu.printMenu("1.List all students|2.Add a new student|"
+                        + "3.Search for a student by ID|0.Exit|Select:");
                 choice = DataInput.getIntegerNumber();
+                
                 switch (choice) {
                     case 1:
                         listAllStudent(studentDAO.getAll());
                         break;
                     case 2:
                         addNewStudent();
+                        break;
+                    case 3:
+                        searchStudentById();
                         break;
                     case 0:
                         return;
@@ -89,7 +94,16 @@ public class StudentManagement {
             printStudent(student);
         }
     }
-
+    
+    public void printFoundStudent (Student student){
+        if(student == null){
+            System.out.println("Student ID does not exist!");
+            return;
+        }
+        printStudent(student);
+        
+    }
+    
     public void printStudent(Student student) {
 
         System.out.printf(rowFormat,
@@ -98,7 +112,20 @@ public class StudentManagement {
                 student.getMajor(),
                 student.getGpa());
     }
-
+    
+    public void searchStudentById(){
+        String id = DataInput.getString("Enter id: ");
+        
+        if(!DataValidation.checkStringEmpty(id)){
+            System.out.println("Id must be not null");
+            return;
+        }
+        
+        Student student = findById(id);
+        
+        printFoundStudent(student);
+    }
+    
     public Student findById(String id) {
         return studentDAO.findById(id);
     }
