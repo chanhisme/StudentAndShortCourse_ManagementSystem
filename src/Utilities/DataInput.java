@@ -60,7 +60,6 @@ public class DataInput {
     public static String getString() {
 
         String strInput = sc.nextLine();
-
         return strInput.trim();
     }
 

@@ -3,8 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Entities;
-
-import Utilities.DataInput;
+import Utilities.Constants;
 import Utilities.DataValidation;
 
 /**
@@ -12,15 +11,15 @@ import Utilities.DataValidation;
  * @author chanh
  */
 public class Student {
-    
+
+    private String rowFormat = "%-10s %-25s %-25s %-10.2f\n";
+
     private String id;
     private String name;
     private String major;
     private double gpa;
-    
-    
-    private final String REGEX_NAME = "^\\s*\\S+(?:\\s+\\S+)+\\s*$";
-    private final String REGEX_ID = "^STU\\d{4}$";
+;
+
     public Student(String id, String name, String major, double gpa) throws Exception {
         setId(id);
         setName(name);
@@ -34,7 +33,7 @@ public class Student {
     }
 
     public void setId(String id) throws Exception {
-        if(!DataValidation.checkStringWithFormat(id, REGEX_ID)){
+        if (!DataValidation.checkStringWithFormat(id, Constants.REGEX_STUDENT_ID)) {
             throw new Exception("Student ID must follow the format STU0000.");
         }
         this.id = id;
@@ -45,7 +44,7 @@ public class Student {
     }
 
     public void setName(String name) throws Exception {
-        if(!DataValidation.checkStringWithFormat(name, REGEX_NAME)){
+        if (!DataValidation.checkStringWithFormat(name, Constants.REGEX_STUDENT_NAME)) {
             throw new Exception("Name is invalid");
         }
         this.name = name;
@@ -56,7 +55,7 @@ public class Student {
     }
 
     public void setMajor(String major) throws Exception {
-        if(major == null || major.isEmpty()){
+        if (major == null || major.isEmpty()) {
             throw new Exception("major must be not null");
         }
         this.major = major;
@@ -67,10 +66,19 @@ public class Student {
     }
 
     public void setGpa(double gpa) throws Exception {
-        if(gpa < 0.0 || gpa > 4.0){
+        if (gpa < 0.0 || gpa > 4.0) {
             throw new Exception("gpa is invalid");
         }
         this.gpa = gpa;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(rowFormat, 
+                getId(),
+                getName(),
+                getMajor(),
+                getGpa());
     }
 
 }

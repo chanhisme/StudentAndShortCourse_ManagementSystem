@@ -1,10 +1,10 @@
 package BusinessObject;
 
 import Entities.Student;
-import ObjectData.BasedDAO;
+import DataObject.BasedDAO;
 import Utilities.DataInput;
 import Utilities.Menu;
-import ObjectData.StudentDAO;
+import DataObject.StudentDAO;
 import java.util.Map;
 import java.util.LinkedHashMap;
 

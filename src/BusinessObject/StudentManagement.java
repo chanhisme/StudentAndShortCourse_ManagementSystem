@@ -5,12 +5,11 @@
 package BusinessObject;
 
 import Entities.Student;
-import ObjectData.StudentDAO;
+import DataObject.StudentDAO;
 import Utilities.DataInput;
 import Utilities.Menu;
 import java.util.List;
 import Utilities.DataValidation;
-
 /**
  *
  * @author chanh
@@ -19,7 +18,6 @@ public class StudentManagement {
 
     private StudentDAO studentDAO;
     private int choice;
-    private String rowFormat = "%-10s %-25s %-25s %-10.2f\n";
 
     public StudentManagement(StudentDAO studentDAO) {
         this.studentDAO = studentDAO;
@@ -53,7 +51,7 @@ public class StudentManagement {
                         listAllStudentsByMajor();
                         break;
                     case 0:
-                        listAllStudentsByMajor();
+                        System.out.println("Exited Student menu");
                         return;
 
                 }
@@ -116,12 +114,8 @@ public class StudentManagement {
     }
 
     public void printStudent(Student student) {
-
-        System.out.printf(rowFormat,
-                student.getId(),
-                student.getName(),
-                student.getMajor(),
-                student.getGpa());
+        
+        System.out.printf(student.toString());
     }
 
     public void searchStudentById() {
