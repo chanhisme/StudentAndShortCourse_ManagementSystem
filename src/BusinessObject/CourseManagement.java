@@ -2,10 +2,14 @@ package BusinessObject;
 
 import DataObject.CourseDAO;
 import Entities.Course;
+import Utilities.Constants;
 import Utilities.DataInput;
 import Utilities.DataValidation;
 import Utilities.Menu;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import Entities.Student;
 
 /**
  *
@@ -13,11 +17,14 @@ import java.time.LocalDate;
  */
 public class CourseManagement {
 
-    private CourseDAO courseDAO;
+    private final CourseDAO courseDAO;
+    private final StudentManagement studentManagement;
     private int choice;
 
-    public CourseManagement(CourseDAO courseDAO) {
+    public CourseManagement(CourseDAO courseDAO, StudentManagement studentManagement) {
         this.courseDAO = courseDAO;
+        this.studentManagement = studentManagement;
+
     }
 
     public void processMenuForCourse() {
@@ -25,14 +32,19 @@ public class CourseManagement {
 
             do {
                 System.out.println("\n\n***************Student Menu***************");
-                Menu.printMenu("1.List all students|2.Add a new student|"
-                        + "3.Search for a student by ID|"
-                        + "4.Update a Student's GPA by ID|"
-                        + "5.List all Students by Major|0.Exit|Select:");
+                Menu.printMenu("1.List all course by student|2.Add a new course|"
+                        + "3.Calculate total study duration by student ID|"
+                        + "4.Remove a student by ID|"
+                        + "5.Sort students by GPA|0.Exit|Select:");
                 choice = DataInput.getIntegerNumber();
 
                 switch (choice) {
-
+                    case 1:
+                        listCourseByStudent();
+                        break;
+                    case 2:
+                        addCourse();
+                        break;
                     case 0:
                         System.out.println("Exited Course menu");
                         return;
@@ -45,7 +57,7 @@ public class CourseManagement {
         }
     }
 
-    public Course inputNewCourse() {
+    public Course inputNewCourse() throws Exception {
         String courseId = DataInput.getString("Enter course id: ");
         String studentId = DataInput.getString("Enter student id: ");
         String courseName = DataInput.getString("Enter course name: ");
@@ -53,29 +65,92 @@ public class CourseManagement {
         try {
             duration = DataInput.getIntegerNumber("Enter duration: ");
 
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        String startedDate = DataInput.getString("Enter started date: ");
-        
-        return new Course(courseId, studentId, courseName, duration, LocalDate.parse(startedDate));
+        String startedDateStr = DataInput.getString("Enter started date (dd/MM/yyyy): ");
+
+        LocalDate startedDate;
+        try {
+            startedDate = LocalDate.parse(startedDateStr.trim(), Constants.DATE_FORMATTER);
+        } catch (DateTimeParseException e) {
+            throw new Exception("Start date must be dd/MM/yyyy, e.g. 15/09/2025.");
+        }
+        if (!startedDate.isAfter(LocalDate.now())) {
+            throw new Exception("Start date must be a future date.");
+        }
+
+        return new Course(courseId, studentId, courseName, duration, startedDate);
     }
 
     public void addCourse() {
-        Course course = inputNewCourse();
-        if(!DataValidation.checkObjectNull(findCourseById(course.getCourseId()))){
-            System.out.println("this course is ");
-            return;
+        try {
+            Course course = inputNewCourse();
+            if (courseDAO.isDuplicate(course.getCourseId(), course.getStudentId())) {
+                System.out.println("Student " + course.getStudentId()
+                        + " has already registered course " + course.getCourseId());
+                return;
+            }
+            if (!DataValidation.isValidStartedDate(course.getStartedDate())) {
+                System.out.println("Duration must be a positive integer in weeks, minimum 1 week.");
+            }
+            courseDAO.add(course);
+            courseDAO.save();
+            System.out.println("Course added successfully");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
-    public Course findCourseById(String id) {
-        if (id == null) {
+    public boolean isDuplicate(String courseId, String studentId) {
+        return courseDAO.isDuplicate(courseId, studentId);
+    }
+
+    public Course findCourseById(String courseId, String studentId) {
+        if (DataValidation.isObjectNull(courseId) || DataValidation.isObjectNull(studentId)) {
             System.out.println("Id cannot null");
             return null;
         }
-        return courseDAO.findById(id);
+
+        return courseDAO.findById(courseId, studentId);
+
+    }
+
+    public void printCourse(Course course) {
+        if (DataValidation.isObjectNull(course)) {
+            System.out.println("cannot null");
+            return;
+        }
+        System.out.println(course.toString());
+    }
+
+    public void printAllCourseGroupByStudent(ArrayList<Course> courses) {
+        if (DataValidation.isObjectNull(courses) || courses.isEmpty()) {
+            System.out.println("List is empty");
+            return;
+        }
+        String tmp = null;
+        for (Course c : courses) {
+            Student s = studentManagement.findById(c.getStudentId());
+            if (DataValidation.isObjectNull(s)) {
+                continue; 
+            }
+            if (tmp == null || !s.getId().equals(tmp)) {
+                tmp = s.getId();
+                System.out.printf("\n%s, %s, %s\n", s.getId(), s.getName(), s.getMajor()); // chỉ in khi sang SV mới
+                System.out.printf("%-10s %-10s %-12s\n", "Course ID", "Duration", "Start Date");
+            }
+            printCourse(c);
+        }
+    }
+
+    public void listCourseByStudent() {
+        ArrayList<Course> res = courseDAO.findAllCourseByStudent();
+        if (DataValidation.isObjectNull(res)) {
+            System.out.println("Cannot find any");
+            return;
+        }
+        printAllCourseGroupByStudent(res);
 
     }
 }

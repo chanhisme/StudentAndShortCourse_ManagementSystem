@@ -4,6 +4,8 @@
  */
 package Utilities;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author chanh
@@ -26,13 +28,29 @@ public final class DataValidation {
         return result;
     }
 
-    public static <V> boolean checkObjectNull(V object) {
-        boolean result = true;
+    public static <V> boolean isObjectNull(V object) {
+        boolean result = false;
 
         if (object == null) {
-            result = false;
+            result = true;
         }
 
         return result;
+    }
+    public static boolean isValidStartedDate(LocalDate startedDate){
+        
+        if (startedDate == null) {
+            System.out.println("Start date must be not null");
+            return false;
+        }
+        if (startedDate.isBefore(LocalDate.now().plusWeeks(1))) {
+             System.out.println("Start date must be at least 1 week after today.");
+             return false;
+        }
+        return true;
+    }
+    
+    public static boolean isPositiveNumber(int number){
+        return number >=1;
     }
 }

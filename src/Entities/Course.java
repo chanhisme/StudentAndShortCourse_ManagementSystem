@@ -6,12 +6,16 @@ package Entities;
 
 import java.time.LocalDate;
 import Utilities.Constants;
-import java.time.format.DateTimeFormatter;
+import Utilities.DataValidation;
+
 /**
  *
  * @author chanh
  */
 public class Course {
+
+    private String rowFormat = "%-10s %-10d %-12s";
+
     private String courseId, studentId, name;
     private int duration;
     private LocalDate startedDate;
@@ -20,7 +24,7 @@ public class Course {
         this.courseId = courseId;
         this.studentId = studentId;
         this.name = name;
-        this.duration = duration;
+        setDuration(duration);
         this.startedDate = startedDate;
     }
 
@@ -53,19 +57,32 @@ public class Course {
     }
 
     public void setDuration(int duration) {
+        if(!DataValidation.isPositiveNumber(duration)){
+            System.out.println("must be positive number");
+            return;
+        }
         this.duration = duration;
     }
 
     public LocalDate getStartedDate() {
         return startedDate;
     }
-    
-    public String getFormatedDate(){
+
+    public String getFormatedDate() {
         return startedDate.format(Constants.DATE_FORMATTER);
     }
 
-    public void setStartedDate(LocalDate startedDate) {
+    public void setStartedDate(LocalDate startedDate){
+        
         this.startedDate = startedDate;
     }
-    
+
+    @Override
+    public String toString() {
+        return String.format(rowFormat,
+                getCourseId(),
+                getDuration(),
+                getFormatedDate()); // dd/MM/yyyy
+    }
+
 }

@@ -23,8 +23,6 @@ public abstract class BasedDAO <V> {
     protected abstract void add(V entity);
 
     protected abstract ArrayList<V> getAll();
-
-    protected abstract V findById(String id);
     
     protected abstract void save();
     

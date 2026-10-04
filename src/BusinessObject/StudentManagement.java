@@ -92,7 +92,7 @@ public class StudentManagement {
     }
 
     public void listAllStudent(List<Student> students) {
-        if (!DataValidation.checkObjectNull(students) || students.isEmpty()) {
+        if (DataValidation.isObjectNull(students) || students.isEmpty()) {
             System.out.println("the student list must be not empty and null");
             return;
         }
@@ -104,7 +104,7 @@ public class StudentManagement {
     }
 
     public void printFoundStudent(Student student) {
-        if (!DataValidation.checkObjectNull(student)) {
+        if (DataValidation.isObjectNull(student)) {
             System.out.println("Student ID does not exist!");
             return;
         }
@@ -140,7 +140,7 @@ public class StudentManagement {
         }
 
         Student student = findById(id);
-        if (!DataValidation.checkObjectNull(student)) {
+        if (DataValidation.isObjectNull(student)) {
             System.out.println("Student must be not null");
             return;
         }
@@ -179,7 +179,7 @@ public class StudentManagement {
     public void listAllStudentsByMajor() {
         String major = DataInput.getString("Enter major: ");
         List<Student> students = studentDAO.findStudentByMajor(major);
-        if (!DataValidation.checkObjectNull(students) || students.isEmpty()) {
+        if (DataValidation.isObjectNull(students) || students.isEmpty()) {
             System.out.println("The student list must be not empty");
             return;
         }

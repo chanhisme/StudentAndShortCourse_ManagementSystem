@@ -37,7 +37,6 @@ public class StudentDAO extends BasedDAO<Student> {
         return new ArrayList<>(students.values());
     }
 
-    @Override
     public Student findById(String id) {
         return students.get(id);
     }
@@ -49,7 +48,7 @@ public class StudentDAO extends BasedDAO<Student> {
                 writer.write(student.getId() + separation);
                 writer.write(student.getName() + separation);
                 writer.write(student.getMajor() + separation);
-                writer.write(student.getGpa() + separation);
+                writer.write(String.valueOf(student.getGpa()));
                 writer.newLine();
             }
             System.out.println("Save ok");
@@ -61,31 +60,40 @@ public class StudentDAO extends BasedDAO<Student> {
 
     @Override
     public void load() {
-        String line = null;
-        try(BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))){
-            while( (line = reader.readLine()) != null){
-                String [] parts = line.split(separation);
-                String id = parts[0];
-                String name = parts[1];
-                String major = parts[2];
-                double gpa = Double.valueOf(parts[3]);
-                add(new Student(id, name, major, gpa));
+        String line;
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+            while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+                try {
+                    String[] parts = line.split(",\\s*");
+                    if (parts.length < 4) {
+                        System.out.println("Skip bad line: " + line);
+                        continue;
+                    }
+                    String id = parts[0].trim();
+                    String name = parts[1].trim();
+                    String major = parts[2].trim();
+                    double gpa = Double.parseDouble(parts[3].trim());
+                    add(new Student(id, name, major, gpa));
+                } catch (Exception ex) {
+                    System.out.println("Skip bad line: " + line + " (" + ex.getMessage() + ")");
+                }
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-    
-    public List <Student> findStudentByMajor(String major){
-        List <Student> result = new ArrayList<>();
-        for(Student student : getAll()){
-            if(student.getMajor().equalsIgnoreCase(major)){
+
+    public List<Student> findStudentByMajor(String major) {
+        List<Student> result = new ArrayList<>();
+        for (Student student : getAll()) {
+            if (student.getMajor().equalsIgnoreCase(major)) {
                 result.add(student);
             }
         }
         return result;
     }
-    
-    
+
 }
