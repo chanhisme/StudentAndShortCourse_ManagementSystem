@@ -10,6 +10,7 @@ import Utilities.DataInput;
 import Utilities.Menu;
 import java.util.List;
 import Utilities.DataValidation;
+import java.util.ArrayList;
 
 /**
  *
@@ -122,7 +123,12 @@ public class StudentManagement {
     }
     
     public void sortAscendingGpa(){
-        listAllStudent(studentDAO.sortAscendingGpa());
+        ArrayList <Student> res = studentDAO.sortAscendingGpa();
+        if(DataValidation.isObjectNull(res)){
+            System.out.println("Empty list");
+            return;
+        }
+        listAllStudent(res);
     }
     
     public void printFoundStudent(Student student) {
