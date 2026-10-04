@@ -10,6 +10,7 @@ import Utilities.DataInput;
 import Utilities.Menu;
 import java.util.List;
 import Utilities.DataValidation;
+
 /**
  *
  * @author chanh
@@ -31,7 +32,9 @@ public class StudentManagement {
                 Menu.printMenu("1.List all students|2.Add a new student|"
                         + "3.Search for a student by ID|"
                         + "4.Update a Student's GPA by ID|"
-                        + "5.List all Students by Major|0.Exit|Select:");
+                        + "5.List all Students by Major|"
+                        + "6.Remove student by id|"
+                        + "0.Exit|Select:");
                 choice = DataInput.getIntegerNumber();
 
                 switch (choice) {
@@ -49,6 +52,9 @@ public class StudentManagement {
                         break;
                     case 5:
                         listAllStudentsByMajor();
+                        break;
+                    case 6:
+                        removeStudent();
                         break;
                     case 0:
                         System.out.println("Exited Student menu");
@@ -122,7 +128,7 @@ public class StudentManagement {
     }
 
     public void printStudent(Student student) {
-        
+
         System.out.printf(student.toString());
     }
 
@@ -197,8 +203,25 @@ public class StudentManagement {
         return studentDAO.findById(id);
     }
 
-    public void removeStudent(){
-       
+    public void removeStudent() {
+        try {
+            String id = inputStudentId();
+            if (DataValidation.isObjectNull(id)) {
+                System.out.println("Cannot null");
+                return;
+            }
+            if (DataValidation.isObjectNull(findById(id))) {
+                System.out.println("Student not existed");
+                return;
+            }
+            studentDAO.removeStudent(id);
+            studentDAO.save();
+            System.out.println("Remove successfully");
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
     }
 
 }

@@ -95,5 +95,9 @@ public class StudentDAO extends BasedDAO<Student> {
         }
         return result;
     }
+    
+    public void removeStudent(String id){
+        students.remove(id);
+    }
 
 }
