@@ -51,6 +51,8 @@ public class CourseManagement {
                     case 0:
                         System.out.println("Exited Course menu");
                         return;
+                    default:
+                        System.out.println("Data invalid");
 
                 }
             } while (true);
@@ -98,8 +100,11 @@ public class CourseManagement {
                 System.out.println("Duration must be a positive integer in weeks, minimum 1 week.");
             }
             courseDAO.add(course);
-            courseDAO.save();
-            System.out.println("Course added successfully");
+            if (courseDAO.save()) {
+                System.out.println("Course added successfully");
+            } else {
+                System.out.println("Course save failed");
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

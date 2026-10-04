@@ -42,7 +42,7 @@ public class StudentDAO extends BasedDAO<Student> {
     }
 
     @Override
-    public void save() {
+    public boolean save() {
         try ( BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (Student student : getAll()) {
                 writer.write(student.getId() + separation);
@@ -51,9 +51,10 @@ public class StudentDAO extends BasedDAO<Student> {
                 writer.write(String.valueOf(student.getGpa()));
                 writer.newLine();
             }
-            System.out.println("Save ok");
+            return true;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.err.println("Save failed: " + e.getMessage());
+            return false;
         }
 
     }

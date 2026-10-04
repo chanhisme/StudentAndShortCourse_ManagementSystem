@@ -64,6 +64,8 @@ public class StudentManagement {
                     case 0:
                         System.out.println("Exited Student menu");
                         return;
+                    default:
+                        System.out.println("Data invalid");
 
                 }
             } while (true);
@@ -102,8 +104,11 @@ public class StudentManagement {
             studentDAO.add(student);
             System.out.println("Student added successfully");
 
-            studentDAO.save();
-            System.out.println("Student save successfully");
+            if (studentDAO.save()) {
+                System.out.println("Student save successfully");
+            } else {
+                System.out.println("Student save failed");
+            }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -121,16 +126,16 @@ public class StudentManagement {
             printStudent(student);
         }
     }
-    
-    public void sortAscendingGpa(){
-        ArrayList <Student> res = studentDAO.sortAscendingGpa();
-        if(DataValidation.isObjectNull(res)){
+
+    public void sortAscendingGpa() {
+        ArrayList<Student> res = studentDAO.sortAscendingGpa();
+        if (DataValidation.isObjectNull(res)) {
             System.out.println("Empty list");
             return;
         }
         listAllStudent(res);
     }
-    
+
     public void printFoundStudent(Student student) {
         if (DataValidation.isObjectNull(student)) {
             System.out.println("Student ID does not exist!");
@@ -165,8 +170,11 @@ public class StudentManagement {
                 return;
             }
             if (setnewStudent(student)) {
-                studentDAO.save();
-                System.out.println("Update successfully");
+                if (studentDAO.save()) {
+                    System.out.println("Update successfully");
+                } else {
+                    System.out.println("Update failed: cannot save data");
+                }
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -229,10 +237,12 @@ public class StudentManagement {
                 return;
             }
             studentDAO.removeStudent(id);
-            studentDAO.save();
-            System.out.println("Remove successfully");
-        }
-        catch (Exception e){
+            if (studentDAO.save()) {
+                System.out.println("Remove successfully");
+            } else {
+                System.out.println("Remove failed: cannot save data");
+            }
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 

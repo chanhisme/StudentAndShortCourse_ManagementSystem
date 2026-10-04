@@ -24,7 +24,7 @@ public abstract class BasedDAO <V> {
 
     protected abstract ArrayList<V> getAll();
     
-    protected abstract void save();
+    protected abstract boolean save();
     
     protected abstract void load();
 }

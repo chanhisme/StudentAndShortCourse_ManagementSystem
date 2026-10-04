@@ -82,7 +82,7 @@ public class CourseDAO extends BasedDAO<Course> {
     }
 
     @Override
-    public void save() {
+    public boolean save() {
         try ( BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (Course course : getAll()) {
                 writer.write(course.getCourseId() + separation);
@@ -92,9 +92,10 @@ public class CourseDAO extends BasedDAO<Course> {
                 writer.write(course.getFormatedDate());
                 writer.newLine();
             }
-            System.out.println("Save ok");
+            return true;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.err.println("Save failed: " + e.getMessage());
+            return false;
         }
     }
 
