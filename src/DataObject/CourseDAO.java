@@ -53,8 +53,25 @@ public class CourseDAO extends BasedDAO<Course> {
     public Course findById(String courseId, String studentId) {
         return courseMap.get(makeKey(courseId, studentId));
     }
-
-    public ArrayList<Course> findAllCourseByStudent() {
+    
+    public ArrayList <Course> findAllCourseByStudentId(String studentId){
+        ArrayList <Course> res = new ArrayList<>();
+        for(Course c : getAll()){
+            if(c.getStudentId().equalsIgnoreCase(studentId)){
+                res.add(c);
+            }
+        }
+        return res;
+    }
+    
+    public int getTotalDuration(ArrayList <Course> courses){
+        int res = 0;
+        for(Course c : courses){
+             res += c.getDuration();
+        }
+        return res;
+    }
+    public ArrayList<Course> GroupAllCourseByStudent() {
         ArrayList<Course> res = getAll();
 
         res.sort((c1, c2)

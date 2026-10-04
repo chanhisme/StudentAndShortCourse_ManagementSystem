@@ -45,6 +45,9 @@ public class CourseManagement {
                     case 2:
                         addCourse();
                         break;
+                    case 3:
+                        calculateTotalDuration();
+                        break;
                     case 0:
                         System.out.println("Exited Course menu");
                         return;
@@ -133,11 +136,11 @@ public class CourseManagement {
         for (Course c : courses) {
             Student s = studentManagement.findById(c.getStudentId());
             if (DataValidation.isObjectNull(s)) {
-                continue; 
+                continue;
             }
             if (tmp == null || !s.getId().equals(tmp)) {
                 tmp = s.getId();
-                System.out.printf("\n%s, %s, %s\n", s.getId(), s.getName(), s.getMajor()); // chỉ in khi sang SV mới
+                System.out.printf("\n%s, %s, %s\n", s.getId(), s.getName(), s.getMajor());
                 System.out.printf("%-10s %-10s %-12s\n", "Course ID", "Duration", "Start Date");
             }
             printCourse(c);
@@ -145,7 +148,7 @@ public class CourseManagement {
     }
 
     public void listCourseByStudent() {
-        ArrayList<Course> res = courseDAO.findAllCourseByStudent();
+        ArrayList<Course> res = courseDAO.GroupAllCourseByStudent();
         if (DataValidation.isObjectNull(res)) {
             System.out.println("Cannot find any");
             return;
@@ -153,4 +156,28 @@ public class CourseManagement {
         printAllCourseGroupByStudent(res);
 
     }
+
+    public void calculateTotalDuration() {
+        String studentId = DataInput.getString("Enter student id: ");
+        if (DataValidation.isObjectNull(studentId)) {
+            System.out.println("Cannot null");
+            return;
+        }
+
+        if (DataValidation.isObjectNull(studentManagement.findById(studentId))) {
+            System.out.println("id not existed");
+            return;
+        }
+
+        ArrayList<Course> res = courseDAO.findAllCourseByStudentId(studentId);
+        if (DataValidation.isObjectNull(res)) {
+            System.out.println("List is empty()");
+            return;
+        }
+        int total = courseDAO.getTotalDuration(res);
+        studentManagement.printStudent(studentManagement.findById(studentId));
+        System.out.println("Total duration: " + total + " weeks");
+
+    }
+
 }
