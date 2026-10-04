@@ -34,6 +34,7 @@ public class StudentManagement {
                         + "4.Update a Student's GPA by ID|"
                         + "5.List all Students by Major|"
                         + "6.Remove student by id|"
+                        + "7.Sort by ascending GPA|"
                         + "0.Exit|Select:");
                 choice = DataInput.getIntegerNumber();
 
@@ -55,6 +56,9 @@ public class StudentManagement {
                         break;
                     case 6:
                         removeStudent();
+                        break;
+                    case 7:
+                        sortAscendingGpa();
                         break;
                     case 0:
                         System.out.println("Exited Student menu");
@@ -116,7 +120,11 @@ public class StudentManagement {
             printStudent(student);
         }
     }
-
+    
+    public void sortAscendingGpa(){
+        listAllStudent(studentDAO.sortAscendingGpa());
+    }
+    
     public void printFoundStudent(Student student) {
         if (DataValidation.isObjectNull(student)) {
             System.out.println("Student ID does not exist!");

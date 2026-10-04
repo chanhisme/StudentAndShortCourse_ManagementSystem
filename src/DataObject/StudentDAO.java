@@ -61,7 +61,7 @@ public class StudentDAO extends BasedDAO<Student> {
     @Override
     public void load() {
         String line;
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+        try ( BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             while ((line = reader.readLine()) != null) {
                 if (line.trim().isEmpty()) {
                     continue;
@@ -95,9 +95,15 @@ public class StudentDAO extends BasedDAO<Student> {
         }
         return result;
     }
-    
-    public void removeStudent(String id){
+
+    public void removeStudent(String id) {
         students.remove(id);
+    }
+
+    public ArrayList<Student> sortAscendingGpa() {
+        ArrayList<Student> res = getAll();
+        res.sort((s1, s2) -> Double.compare(s1.getGpa(), s2.getGpa()));
+        return res;
     }
 
 }
