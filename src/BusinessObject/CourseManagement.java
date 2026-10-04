@@ -62,7 +62,7 @@ public class CourseManagement {
 
     public Course inputNewCourse() throws Exception {
         String courseId = DataInput.getString("Enter course id: ");
-        String studentId = DataInput.getString("Enter student id: ");
+        String studentId = studentManagement.inputStudentId();
         String courseName = DataInput.getString("Enter course name: ");
         int duration = 0;
         try {
@@ -158,9 +158,11 @@ public class CourseManagement {
     }
 
     public void calculateTotalDuration() {
-        String studentId = DataInput.getString("Enter student id: ");
-        if (DataValidation.isObjectNull(studentId)) {
-            System.out.println("Cannot null");
+        String studentId;
+        try {
+            studentId = studentManagement.inputStudentId();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return;
         }
 

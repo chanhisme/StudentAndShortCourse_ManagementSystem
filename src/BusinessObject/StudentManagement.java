@@ -62,8 +62,16 @@ public class StudentManagement {
         }
     }
 
+    public String inputStudentId() throws Exception {
+        String id = DataInput.getString("Enter student id: ");
+        if (!DataValidation.checkStringEmpty(id)) {
+            throw new Exception("Id must be not null");
+        }
+        return id;
+    }
+
     public Student inputStudent() throws Exception {
-        String id = DataInput.getString("Enter the id: ");
+        String id = inputStudentId();
         String name = DataInput.getString("Enter the name: ");
         String major = DataInput.getString("Enter the major: ");
         double gpa = DataInput.getDoubleNumber("Enter the gpa: ");
@@ -119,34 +127,29 @@ public class StudentManagement {
     }
 
     public void searchStudentById() {
-        String id = DataInput.getString("Enter id: ");
-
-        if (!DataValidation.checkStringEmpty(id)) {
-            System.out.println("Id must be not null");
-            return;
+        try {
+            String id = inputStudentId();
+            Student student = findById(id);
+            printFoundStudent(student);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
-
-        Student student = findById(id);
-
-        printFoundStudent(student);
     }
 
     public void updateStudentById() {
-        String id = DataInput.getString("Enter id: ");
-
-        if (!DataValidation.checkStringEmpty(id)) {
-            System.out.println("Id must be not null");
-            return;
-        }
-
-        Student student = findById(id);
-        if (DataValidation.isObjectNull(student)) {
-            System.out.println("Student must be not null");
-            return;
-        }
-        if (setnewStudent(student)) {
-            studentDAO.save();
-            System.out.println("Update successfully");
+        try {
+            String id = inputStudentId();
+            Student student = findById(id);
+            if (DataValidation.isObjectNull(student)) {
+                System.out.println("Student must be not null");
+                return;
+            }
+            if (setnewStudent(student)) {
+                studentDAO.save();
+                System.out.println("Update successfully");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -193,4 +196,9 @@ public class StudentManagement {
     public Student findById(String id) {
         return studentDAO.findById(id);
     }
+
+    public void removeStudent(){
+       
+    }
+
 }
