@@ -43,8 +43,8 @@ public final class DataValidation {
             System.out.println("Start date must be not null");
             return false;
         }
-        if (startedDate.isBefore(LocalDate.now().plusWeeks(1))) {
-             System.out.println("Start date must be at least 1 week after today.");
+        if (!startedDate.isAfter(LocalDate.now())) {
+             System.out.println("Start date must be a future date.");
              return false;
         }
         return true;
