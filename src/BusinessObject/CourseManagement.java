@@ -31,11 +31,9 @@ public class CourseManagement {
         try {
 
             do {
-                System.out.println("\n\n***************Student Menu***************");
+                System.out.println("\n\n***************Course Menu***************");
                 Menu.printMenu("1.List all course by student|2.Add a new course|"
-                        + "3.Calculate total study duration by student ID|"
-                        + "4.Remove a student by ID|"
-                        + "5.Sort students by GPA|0.Exit|Select:");
+                        + "3.Calculate total study duration by student ID|0.Exit|Select:");
                 choice = DataInput.getIntegerNumber();
 
                 switch (choice) {
