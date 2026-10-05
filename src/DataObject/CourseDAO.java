@@ -8,8 +8,11 @@ import Entities.Course;
 import Utilities.Constants;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
@@ -83,7 +86,7 @@ public class CourseDAO extends BasedDAO<Course> {
 
     @Override
     public boolean save() {
-        try ( BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
+        try ( BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE_PATH), StandardCharsets.UTF_8))) {
             for (Course course : getAll()) {
                 writer.write(course.getCourseId() + separation);
                 writer.write(course.getStudentId() + separation);
@@ -103,10 +106,13 @@ public class CourseDAO extends BasedDAO<Course> {
     public void load() {
         courseMap.clear();
         String line;
-        try ( BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+        try ( BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(FILE_PATH), StandardCharsets.UTF_8))) {
             while ((line = reader.readLine()) != null) {
                 if (line.trim().isEmpty()) {
                     continue;
+                }
+                if (line.charAt(0) == '\uFEFF') {
+                    line = line.substring(1);
                 }
                 try {
                     String[] parts = line.split(",\\s*");

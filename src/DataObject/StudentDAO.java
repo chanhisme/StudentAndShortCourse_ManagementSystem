@@ -7,8 +7,11 @@ package DataObject;
 import Entities.Student;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +46,7 @@ public class StudentDAO extends BasedDAO<Student> {
 
     @Override
     public boolean save() {
-        try ( BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
+        try ( BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE_PATH), StandardCharsets.UTF_8))) {
             for (Student student : getAll()) {
                 writer.write(student.getId() + separation);
                 writer.write(student.getName() + separation);
@@ -62,10 +65,13 @@ public class StudentDAO extends BasedDAO<Student> {
     @Override
     public void load() {
         String line;
-        try ( BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+        try ( BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(FILE_PATH), StandardCharsets.UTF_8))) {
             while ((line = reader.readLine()) != null) {
                 if (line.trim().isEmpty()) {
                     continue;
+                }
+                if (line.charAt(0) == '\uFEFF') {
+                    line = line.substring(1);
                 }
                 try {
                     String[] parts = line.split(",\\s*");

@@ -1,0 +1,5 @@
+# Chuẩn hoá line ending: LF trong repo, CRLF khi checkout trên Windows
+* text=auto eol=lf
+
+*.java text eol=lf
+*.txt  text eol=lf

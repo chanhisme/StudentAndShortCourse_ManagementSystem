@@ -8,7 +8,10 @@ import java.util.Map;
 import java.util.LinkedHashMap;
 import Entities.Course;
 import DataObject.CourseDAO;
-import javax.xml.transform.OutputKeys;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 
 /**
  *
@@ -23,6 +26,13 @@ public class Program {
     static final String NO = "n";
 
     public static void main(String[] args) {
+
+        try {
+            System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, "UTF-8"));
+            System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err), true, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            System.out.println("Warning: UTF-8 is not supported. Vietnamese characters may display incorrectly.");
+        }
 
         final String STUDENT_FILE_PATH = "Students.txt";
         final String COURSE_FILE_PATH = "Courses.txt";

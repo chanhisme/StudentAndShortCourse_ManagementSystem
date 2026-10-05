@@ -12,7 +12,7 @@ import java.util.Scanner;
  */
 public class DataInput {
 
-    private static final Scanner sc = new Scanner(System.in);
+    private static final Scanner sc = new Scanner(System.in, "UTF-8");
 
     public static int getIntegerNumber(String displayMessage)
             throws Exception {
