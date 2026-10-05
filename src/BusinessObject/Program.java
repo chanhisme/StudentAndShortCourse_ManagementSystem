@@ -89,6 +89,7 @@ public class Program {
             if (opt.equalsIgnoreCase(YES)) {
                 saveAll(courseDAO, studentDAO);
                 System.out.println("Good bye");
+                System.exit(0);
             } else if (opt.equalsIgnoreCase(NO)) {
                 return;
 
