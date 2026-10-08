@@ -67,7 +67,9 @@ public class CourseManagement {
         int duration = 0;
         try {
             duration = DataInput.getIntegerNumber("Enter duration: ");
-
+            if(!DataValidation.isPositiveNumber(duration)){
+                throw new Exception();
+            }
         } catch (Exception e) {
             throw new Exception("Must be positive");
         }
