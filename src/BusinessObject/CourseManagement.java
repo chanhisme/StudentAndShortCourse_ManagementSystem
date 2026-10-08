@@ -69,7 +69,7 @@ public class CourseManagement {
             duration = DataInput.getIntegerNumber("Enter duration: ");
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new Exception("Must be positive");
         }
         String startedDateStr = DataInput.getString("Enter started date (dd/MM/yyyy): ");
 

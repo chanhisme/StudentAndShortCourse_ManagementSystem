@@ -69,7 +69,7 @@ public class Course {
     }
 
     public void setStartedDate(LocalDate startedDate){
-        
+
         this.startedDate = startedDate;
     }
 

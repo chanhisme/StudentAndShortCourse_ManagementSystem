@@ -15,3 +15,4 @@ public class Constants {
     public static final String REGEX_STUDENT_NAME = "^\\s*\\S+(?:\\s+\\S+)+\\s*$";
     public static final String REGEX_STUDENT_ID = "^STU\\d{4}$";
 }
+ 

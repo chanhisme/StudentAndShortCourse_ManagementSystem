@@ -6,3 +6,4 @@ STU0005, Le Hoang Minh, Computer Science, 3.2
 STU0006, Pham Quoc Huy, Artificial Intelligence, 3.9
 STU0007, Vo Thanh Tam, Data Science, 3.5
 STU0008, Nguyen Van A, Software Engineering, 3.4
+STU0009, Nguyễn Văn Bình, Software engineering, 3.6
