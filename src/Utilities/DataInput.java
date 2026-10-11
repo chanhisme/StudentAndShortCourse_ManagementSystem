@@ -1,6 +1,7 @@
 
 package Utilities;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 /**
@@ -59,5 +60,10 @@ public class DataInput {
         String strInput = sc.nextLine();
         return strInput.trim();
     }
-
+    
+    public static LocalDate getLocalDate(String msg) throws Exception{
+        String date = getString(msg);
+        LocalDate startedDate = LocalDate.parse(date, Constants.DATE_FORMATTER);
+        return startedDate;
+    }
 }

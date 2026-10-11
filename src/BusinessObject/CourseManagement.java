@@ -2,7 +2,6 @@ package BusinessObject;
 
 import DataObject.CourseDAO;
 import Entities.Course;
-import Utilities.Constants;
 import Utilities.DataInput;
 import Utilities.DataValidation;
 import Utilities.Menu;
@@ -33,7 +32,8 @@ public class CourseManagement {
             do {
                 System.out.println("\n\n***************Course Menu***************");
                 Menu.printMenu("1.List all course by student|2.Add a new course|"
-                        + "3.Calculate total study duration by student ID|0.Exit|Select:");
+                        + "3.Calculate total study duration by student ID|"
+                        + "|0.Exit|Select:");
                 choice = DataInput.getIntegerNumber();
 
                 switch (choice) {
@@ -45,6 +45,12 @@ public class CourseManagement {
                         break;
                     case 3:
                         calculateTotalDuration();
+                        break;
+                    case 4:
+                        filterCourseInRange();
+                        break;
+                    case 5:
+                        removeCourse();
                         break;
                     case 0:
                         System.out.println("Exited Course menu");
@@ -60,6 +66,56 @@ public class CourseManagement {
         }
     }
 
+    public void removeCourse() {
+        try {
+            String courseId = DataInput.getString("Enter course id: ");
+            String studentId = studentManagement.inputStudentId();
+            if (DataValidation.isObjectNull(studentId)
+                    || DataValidation.isObjectNull(studentManagement.findById(studentId))) {
+                
+                System.out.println("this student is not exsted");
+                return;
+            }
+            Course c = findCourseById(courseId, studentId);
+            if (DataValidation.isObjectNull(courseId) || DataValidation.isObjectNull(c)) {
+                System.out.println("this course is not registered");
+                return;
+            }
+            if(LocalDate.now().isAfter(c.getStartedDate().minusWeeks(1))){
+                System.out.println("Must before started date at leaste 1 week");
+                return;
+            }
+            courseDAO.remove(courseId, studentId);
+            courseDAO.save();
+            System.out.println("Remove successfully");
+            
+            
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    public void filterCourseInRange() {
+        LocalDate startedDate, endDate;
+        try {
+            startedDate = DataInput.getLocalDate("Enter started date: ");
+            endDate = DataInput.getLocalDate("Enter end date: ");
+            if (startedDate.isAfter(endDate)) {
+                throw new Exception("started date must before end date");
+            }
+            ArrayList<Course> res = courseDAO.getFilteredInRange(startedDate, endDate);
+            if (DataValidation.isObjectNull(res) || res.isEmpty()) {
+                throw new Exception("This lis is null");
+            }
+            printListFilted(res);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public Course inputNewCourse() throws Exception {
         String courseId = DataInput.getString("Enter course id: ");
         String studentId = studentManagement.inputStudentId();
@@ -67,17 +123,16 @@ public class CourseManagement {
         int duration = 0;
         try {
             duration = DataInput.getIntegerNumber("Enter duration: ");
-            if(!DataValidation.isPositiveNumber(duration)){
+            if (!DataValidation.isPositiveNumber(duration)) {
                 throw new Exception();
             }
         } catch (Exception e) {
             throw new Exception("Must be positive");
         }
-        String startedDateStr = DataInput.getString("Enter started date (dd/MM/yyyy): ");
 
         LocalDate startedDate;
         try {
-            startedDate = LocalDate.parse(startedDateStr.trim(), Constants.DATE_FORMATTER);
+            startedDate = DataInput.getLocalDate("Enter started date (dd/MM/yyyy): ");
         } catch (DateTimeParseException e) {
             throw new Exception("Start date must be dd/MM/yyyy, e.g. 15/09/2025.");
         }
@@ -91,13 +146,18 @@ public class CourseManagement {
     public void addCourse() {
         try {
             Course course = inputNewCourse();
+            if (DataValidation.isObjectNull(studentManagement.findById(course.getStudentId()))) {
+                System.out.println("Student not existed");
+                return;
+            }
             if (courseDAO.isDuplicate(course.getCourseId(), course.getStudentId())) {
                 System.out.println("Student " + course.getStudentId()
                         + " has already registered course " + course.getCourseId());
                 return;
             }
             if (!DataValidation.isValidStartedDate(course.getStartedDate())) {
-                System.out.println("Duration must be a positive integer in weeks, minimum 1 week.");
+                System.out.println("Start date must be a future date and in the future and minimum 1 week.");
+                return;
             }
             courseDAO.add(course);
             if (courseDAO.save()) {
@@ -130,6 +190,37 @@ public class CourseManagement {
             return;
         }
         System.out.println(course.toString());
+    }
+
+    public void printCourseFilted(Course c) {
+        if (DataValidation.isObjectNull(c)) {
+            System.out.println("cannot null");
+            return;
+        }
+        System.out.printf("%-10s %-10s %-20s %-12d %-12s %-20s\n",
+                c.getCourseId(), c.getStudentId(), c.getName(),
+                c.getDuration(), c.getFormatedDate(), c.getEndDate());
+    }
+
+    public void printListFilted(ArrayList<Course> res) {
+        for (Course c : res) {
+            printCourseFilted(c);
+        }
+    }
+
+    public void printListCourse(ArrayList<Course> res) {
+        for (Course c : res) {
+            printCourseFull(c);
+        }
+    }
+
+    public void printCourseFull(Course c) {
+        if (DataValidation.isObjectNull(c)) {
+            System.out.println("cannot null");
+            return;
+        }
+        System.out.printf("%-10s %-10s %-20s %-12d %-12s\n", c.getCourseId(), c.getStudentId(), c.getName(),
+                c.getDuration(), c.getFormatedDate());
     }
 
     public void printAllCourseGroupByStudent(ArrayList<Course> courses) {
@@ -172,13 +263,13 @@ public class CourseManagement {
         }
 
         if (DataValidation.isObjectNull(studentManagement.findById(studentId))) {
-            System.out.println("id not existed");
+            System.out.println("ID not existed");
             return;
         }
 
         ArrayList<Course> res = courseDAO.findAllCourseByStudentId(studentId);
-        if (DataValidation.isObjectNull(res)) {
-            System.out.println("List is empty()");
+        if (DataValidation.isObjectNull(res) || res.isEmpty()) {
+            System.out.println("No courses for this student");
             return;
         }
         int total = courseDAO.getTotalDuration(res);

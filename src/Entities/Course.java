@@ -80,5 +80,13 @@ public class Course {
                 getDuration(),
                 getFormatedDate()); // dd/MM/yyyy
     }
+    
+    public String getEndDate(){
+        LocalDate endDate = startedDate.plusWeeks(getDuration());
+        String res = endDate.format(Constants.DATE_FORMATTER);
+        return res;
+    }
+    
+    
 
 }

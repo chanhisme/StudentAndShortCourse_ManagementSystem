@@ -55,7 +55,8 @@ public class Program {
                 Menu.printMenu("1.Student Management"
                         + "|2.Course Management"
                         + "|3.Save data to files"
-                        + "|4.Quit program|Select:");
+                        + "|4.Quit program"
+                        + "|Select:");
                 choice = DataInput.getIntegerNumber();
                 switch (choice) {
                     case 1:

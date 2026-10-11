@@ -37,11 +37,9 @@ public final class DataValidation {
     public static boolean isValidStartedDate(LocalDate startedDate){
         
         if (startedDate == null) {
-            System.out.println("Start date must be not null");
             return false;
         }
         if (!startedDate.isAfter(LocalDate.now())) {
-             System.out.println("Start date must be a future date.");
              return false;
         }
         return true;
@@ -50,4 +48,6 @@ public final class DataValidation {
     public static boolean isPositiveNumber(int number){
         return number >=1;
     }
+    
+    
 }

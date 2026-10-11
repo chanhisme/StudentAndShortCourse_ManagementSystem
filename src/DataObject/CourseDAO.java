@@ -80,6 +80,10 @@ public class CourseDAO extends BasedDAO<Course> {
 
         return res;
     }
+    
+    public void remove(String courseId, String studentId){
+        courseMap.remove(makeKey(courseId, studentId));
+    }
 
     @Override
     public boolean save() {
@@ -130,5 +134,16 @@ public class CourseDAO extends BasedDAO<Course> {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+
+    public ArrayList <Course> getFilteredInRange(LocalDate startedDate, LocalDate endDate){
+        ArrayList <Course> res = new ArrayList<>();
+        for(Course c : getAll()){
+            if(!c.getStartedDate().isBefore(startedDate) && !c.getStartedDate().isAfter(endDate)){
+                res.add(c);
+            }
+        }
+        return res;
     }
 }
