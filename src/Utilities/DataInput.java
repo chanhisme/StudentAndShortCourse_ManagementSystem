@@ -12,6 +12,17 @@ public class DataInput {
 
     private static final Scanner sc = new Scanner(System.in, "UTF-8");
 
+    private static String readConsoleLine() {
+        if (System.console() != null) {
+            String line = System.console().readLine();
+            if (line == null) {
+                return "";
+            }
+            return line;
+        }
+        return sc.nextLine();
+    }
+
     public static int getIntegerNumber(String displayMessage)
             throws Exception {
         int number = 0;
@@ -57,7 +68,7 @@ public class DataInput {
     //---------------------------------------------------
     public static String getString() {
 
-        String strInput = sc.nextLine();
+        String strInput = readConsoleLine();
         return strInput.trim();
     }
     

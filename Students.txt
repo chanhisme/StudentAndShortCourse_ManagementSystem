@@ -1,12 +1,12 @@
-STU0001, Le Gia Phuc Chanh, Software engineering, 3.6
-STU0002, Tran Thi B, Information Systems, 3.8
-STU0003, Nguyen Van An, Software Engineering, 3.4
-STU0004, Tran Thi Bich, Information Systems, 3.7
-STU0005, Le Hoang Minh, Computer Science, 3.2
-STU0006, Pham Quoc Huy, Artificial Intelligence, 3.9
-STU0007, Vo Thanh Tam, Data Science, 3.5
-STU0008, Nguyen Van A, Software Engineering, 3.4
-STU0009, Nguyễn Văn Bình, Software engineering, 3.6
+STU0001, Lê Gia Phúc Chánh, Software Engineering, 3.6
+STU0002, Trần Thị Bích, Information Systems, 3.8
+STU0003, Nguyễn Văn An, Software Engineering, 3.4
+STU0004, Trần Thị Bích, Information Systems, 3.7
+STU0005, Lê Hoàng Minh, Computer Science, 3.2
+STU0006, Phạm Quốc Huy, Artificial Intelligence, 3.9
+STU0007, Võ Thanh Tâm, Data Science, 3.5
+STU0008, Nguyễn Văn Anh, Software Engineering, 3.4
+STU0009, Nguyễn Văn Bình, Software Engineering, 3.6
 STU0010, Nguyễn Thị Lan Anh, Software Engineering, 3.7
 STU0011, Trần Văn Hoàng, Information Systems, 3.5
 STU0012, Phạm Thị Thu Hà, Computer Science, 3.8

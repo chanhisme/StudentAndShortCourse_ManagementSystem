@@ -33,7 +33,7 @@ public class CourseManagement {
                 System.out.println("\n\n***************Course Menu***************");
                 Menu.printMenu("1.List all course by student|2.Add a new course|"
                         + "3.Calculate total study duration by student ID|"
-                        + "|0.Exit|Select:");
+                        + "0.Exit|Select:");
                 choice = DataInput.getIntegerNumber();
 
                 switch (choice) {
@@ -45,12 +45,6 @@ public class CourseManagement {
                         break;
                     case 3:
                         calculateTotalDuration();
-                        break;
-                    case 4:
-                        filterCourseInRange();
-                        break;
-                    case 5:
-                        removeCourse();
                         break;
                     case 0:
                         System.out.println("Exited Course menu");

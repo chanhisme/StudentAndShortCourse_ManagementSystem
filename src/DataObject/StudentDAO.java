@@ -38,6 +38,9 @@ public class StudentDAO extends BasedDAO<Student> {
     }
 
     public Student findById(String id) {
+        if (id == null) {
+            return null;
+        }
         return students.get(id.toUpperCase());
     }
 
