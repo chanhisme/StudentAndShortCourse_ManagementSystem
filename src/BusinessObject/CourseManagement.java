@@ -68,7 +68,7 @@ public class CourseManagement {
 
     public void removeCourse() {
         try {
-            String courseId = DataInput.getString("Enter course id: ");
+            String courseId = DataInput.getString("Enter course id: ").trim().toUpperCase();
             String studentId = studentManagement.inputStudentId();
             if (DataValidation.isObjectNull(studentId)
                     || DataValidation.isObjectNull(studentManagement.findById(studentId))) {
@@ -117,7 +117,7 @@ public class CourseManagement {
     }
 
     public Course inputNewCourse() throws Exception {
-        String courseId = DataInput.getString("Enter course id: ");
+        String courseId = DataInput.getString("Enter course id: ").trim().toUpperCase();
         String studentId = studentManagement.inputStudentId();
         String courseName = DataInput.getString("Enter course name: ");
         int duration = 0;

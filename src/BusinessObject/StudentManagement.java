@@ -47,7 +47,7 @@ public class StudentManagement {
                         searchStudentById();
                         break;
                     case 4:
-                        updateStudentById();
+                        updateStudentGpaById();
                         break;
                     case 5:
                         listAllStudentsByMajor();
@@ -77,7 +77,7 @@ public class StudentManagement {
         if (!DataValidation.checkStringEmpty(id)) {
             throw new Exception("Id must be not null");
         }
-        return id;
+        return id.trim().toUpperCase();
     }
 
     public Student inputStudent() throws Exception {
@@ -173,6 +173,30 @@ public class StudentManagement {
                     System.out.println("Update failed: cannot save data");
                 }
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void updateStudentGpaById() {
+        try {
+            String id = inputStudentId();
+            Student student = findById(id);
+            if (DataValidation.isObjectNull(student)) {
+                System.out.println("Student must be not null");
+                return;
+            }
+            double newGpa = DataInput.getDoubleNumber("Enter new gpa: ");
+            if (newGpa < 0 || newGpa > 4) {
+                System.out.println("Gpa invalid");
+                return;
+            }
+            student.setGpa(newGpa);
+            if (studentDAO.save()) {
+                System.out.println("Update successfully");
+            } else {
+                System.out.println("Update failed: cannot save data");
+            }
+            
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

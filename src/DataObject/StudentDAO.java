@@ -38,7 +38,7 @@ public class StudentDAO extends BasedDAO<Student> {
     }
 
     public Student findById(String id) {
-        return students.get(id);
+        return students.get(id.toUpperCase());
     }
 
     @Override

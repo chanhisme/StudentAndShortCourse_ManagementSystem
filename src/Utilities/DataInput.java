@@ -33,16 +33,16 @@ public class DataInput {
         return number;
     }
 
-    public static double getDoubleNumber(String displayMessage) throws Exception {
+     public static double getDoubleNumber(String displayMessage) throws Exception {
         double number = 0;
         String strInput = getString(displayMessage);
-        if (DataValidation.checkStringEmpty(strInput)) {
-            if (!DataValidation.checkStringWithFormat(strInput, "[0-9]+[.]?[0-9]+")) {
-                throw new Exception("Data invalid.");
-            } else {
-                number = Double.parseDouble(strInput);
-            }
+        if (!DataValidation.checkStringEmpty(strInput)) {
+            throw new Exception("Data invalid.");
         }
+        if (!DataValidation.checkStringWithFormat(strInput, "[0-9]+([.][0-9]+)?")) {
+            throw new Exception("Data invalid.");
+        }
+        number = Double.parseDouble(strInput);
         return number;
     }
 

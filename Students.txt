@@ -7,3 +7,11 @@ STU0006, Pham Quoc Huy, Artificial Intelligence, 3.9
 STU0007, Vo Thanh Tam, Data Science, 3.5
 STU0008, Nguyen Van A, Software Engineering, 3.4
 STU0009, Nguyễn Văn Bình, Software engineering, 3.6
+STU0010, Nguyễn Thị Lan Anh, Software Engineering, 3.7
+STU0011, Trần Văn Hoàng, Information Systems, 3.5
+STU0012, Phạm Thị Thu Hà, Computer Science, 3.8
+STU0013, Lê Văn Đức, Artificial Intelligence, 3.4
+STU0014, Hoàng Thị Mai Linh, Data Science, 3.6
+STU0015, Đỗ Minh Quân, Software Engineering, 3.2
+STU0016, Bùi Thị Ngọc Diệp, Information Systems, 3.9
+STU0017, Đặng Văn Khoa, Computer Science, 3.3

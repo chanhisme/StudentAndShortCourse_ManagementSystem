@@ -33,7 +33,7 @@ public class CourseDAO extends BasedDAO<Course> {
     }
 
     private static String makeKey(String courseId, String studentId) {
-        return courseId.trim() + "|" + studentId.trim();
+        return courseId.trim().toUpperCase() + "|" + studentId.trim().toUpperCase();
     }
 
     private static String[] parseKey(String key) {

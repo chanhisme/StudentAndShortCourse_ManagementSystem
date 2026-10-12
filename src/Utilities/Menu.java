@@ -13,7 +13,7 @@ public class Menu {
     public static void printMenu(String str) {
         List<String> menuList = Arrays.asList(str.split("\\|"));
         menuList.forEach(menuItem -> {
-            if (menuItem.equalsIgnoreCase("Select")) {
+            if (menuItem.equalsIgnoreCase("Select:")) {
                 System.out.print(menuItem);
             } else {
                 System.out.println(menuItem);

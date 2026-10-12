@@ -5,3 +5,25 @@ AI401, STU0004, Machine Learning, 10, 05/10/2026
 DS501, STU0005, Big Data Analytics, 8, 10/10/2026
 DBI202, STU0002, Database Design, 5, 01/11/2025
 PRJ301, STU0001, Java Web Project, 6, 17/10/2026
+PRF192, STU0010, Introduction to Programming, 10, 20/10/2026
+PRO192, STU0010, Object Oriented Programming, 10, 15/12/2026
+DBI202, STU0010, Database Design, 8, 20/01/2027
+LAB211, STU0010, Java Lab, 6, 10/03/2027
+PRJ301, STU0010, Java Web Project, 6, 05/05/2027
+PRF192, STU0011, Introduction to Programming, 10, 25/10/2026
+MAS291, STU0011, Statistics, 8, 12/12/2026
+DBI202, STU0011, Database Design, 8, 18/02/2027
+PRJ301, STU0011, Java Web Project, 6, 10/04/2027
+MAD101, STU0012, Discrete Mathematics, 8, 01/09/2026
+PRF192, STU0012, Introduction to Programming, 10, 20/10/2026
+PRO192, STU0012, Object Oriented Programming, 10, 05/01/2027
+NWC203, STU0012, Computer Networks, 8, 15/03/2027
+IOT102, STU0012, Internet of Things, 6, 20/05/2027
+JPD113, STU0013, Japanese Basic 1, 8, 28/10/2026
+LAB211, STU0013, Java Lab, 6, 15/01/2027
+DBI202, STU0014, Database Design, 8, 02/11/2026
+MAS291, STU0015, Statistics, 8, 18/11/2026
+PRF192, STU0016, Introduction to Programming, 10, 30/11/2026
+PRO192, STU0017, Object Oriented Programming, 10, 08/12/2026
+DBI202, STU0001, Database Design, 8, 25/11/2026
+LAB211, STU0001, Java Lab, 6, 20/01/2027

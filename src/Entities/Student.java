@@ -30,10 +30,14 @@ public class Student {
     }
 
     public void setId(String id) throws Exception {
-        if (!DataValidation.checkStringWithFormat(id, Constants.REGEX_STUDENT_ID)) {
+        if (id == null) {
+            throw new Exception("Student ID must be not null.");
+        }
+        String normalizedId = id.trim().toUpperCase();
+        if (!DataValidation.checkStringWithFormat(normalizedId, Constants.REGEX_STUDENT_ID)) {
             throw new Exception("Student ID must follow the format STU0000.");
         }
-        this.id = id;
+        this.id = normalizedId;
     }
 
     public String getName() {

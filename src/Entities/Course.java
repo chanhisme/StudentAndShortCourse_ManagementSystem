@@ -16,9 +16,9 @@ public class Course {
     private int duration;
     private LocalDate startedDate;
 
-    public Course(String courseId, String studentId, String name, int duration, LocalDate startedDate) {
-        this.courseId = courseId;
-        this.studentId = studentId;
+    public Course(String courseId, String studentId, String name, int duration, LocalDate startedDate) throws Exception {
+        setCourseId(courseId);
+        setStudentId(studentId);
         this.name = name;
         setDuration(duration);
         this.startedDate = startedDate;
@@ -28,16 +28,30 @@ public class Course {
         return courseId;
     }
 
-    public void setCourseId(String courseId) {
-        this.courseId = courseId;
+    public void setCourseId(String courseId) throws Exception {
+        if (courseId == null) {
+            throw new Exception("Course ID must be not null.");
+        }
+        String normalizedId = courseId.trim().toUpperCase();
+        if (normalizedId.isEmpty()) {
+            throw new Exception("Course ID must be not null.");
+        }
+        this.courseId = normalizedId;
     }
 
     public String getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
+    public void setStudentId(String studentId) throws Exception {
+        if (studentId == null) {
+            throw new Exception("Student ID must be not null.");
+        }
+        String normalizedId = studentId.trim().toUpperCase();
+        if (normalizedId.isEmpty()) {
+            throw new Exception("Student ID must be not null.");
+        }
+        this.studentId = normalizedId;
     }
 
     public String getName() {

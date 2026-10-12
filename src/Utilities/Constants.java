@@ -1,6 +1,7 @@
 package Utilities;
 
 import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 
 /**
  *
@@ -8,8 +9,8 @@ import java.time.format.DateTimeFormatter;
  */
 public class Constants {
 
-    public static final String DATE_PATTERN = "dd/MM/yyyy";
-    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_PATTERN);
+    public static final String DATE_PATTERN = "dd/MM/uuuu";
+    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_PATTERN).withResolverStyle(ResolverStyle.STRICT);
     
     
     public static final String REGEX_STUDENT_NAME = "^\\s*\\S+(?:\\s+\\S+)+\\s*$";
